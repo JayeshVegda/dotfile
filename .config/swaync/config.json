@@ -1,0 +1,112 @@
+{
+  "$schema": "/etc/xdg/swaync/configschema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "cssPriority": "user",
+  "control-center-width": 450,
+  "fit-to-screen": true,
+
+  "notification-window-width": 400,
+  "notification-icon-size": 40,
+  "notification-body-image-height": 500,
+  "notification-body-image-width": 500,
+  "notification-inline-replies": true,
+  "notification-2fa-action": false,
+
+  "timeout": 4,
+  "timeout-low": 4,
+  "timeout-critical": 6,
+  
+  "keyboard-shortcuts": true,
+  "image-visibility": "when-available",
+  "transition-time": 200,
+  "hide-on-clear": false,
+  "hide-on-action": false,
+  "script-fail-notify": true,
+
+  "widgets": [
+    "mpris",
+    "dnd",
+    "backlight",
+    "volume",
+    "notifications",
+    "buttons-grid"
+  ],
+ 
+  "widget-config": {
+      "backlight": {
+          "device": "amdgpu_bl2",
+          "label": "󰃠",
+          "slider": true,
+          "min": 10
+      },
+      "volume": {
+          "device": "default",
+          "label": "",
+          "slider": true
+      },
+
+      "dnd": {
+          "text": "Do not disturb"
+      },
+
+      "mpris": {
+          "image-size": 110,
+          "image-radius": 12,
+          "autohide": false,
+          "blacklist": [ "org.mpris.MediaPlayer2.playerctld"]
+      },
+
+      "notifications": {
+          "clear-all-button": true,
+          "clear-on-action": true,
+          "default-timeout": 4000,
+          "group-by-app": true,
+          "ignore-transient": false,
+          "position": "top-right"
+      },
+
+      "buttons-grid": {
+          "actions": [
+              {
+                  "label": "󰤨",
+                  "type": "toggle",
+                  "command": "bash -c $HOME/.config/swaync/scripts/toggle_wifi.sh",
+                  "update-command": "bash -c '$HOME/.config/swaync/scripts/update_wifi.sh'",
+                  "on-click-right": "bash -c $HOME/.config/swaync/scripts/open_network.sh"
+              },
+              {
+                  "label": "󰂯",
+                  "type": "toggle",
+                  "command": "bash -c $HOME/.config/swaync/scripts/toggle_bluetooth.sh",
+                  "update-command": "bash -c '$HOME/.config/swaync/scripts/update_bluetooth.sh'",
+                  "on-click-right": "bash -c $HOME/.config/swaync/scripts/open_bluetooth.sh"
+              },
+              {
+                  "label": "",
+                  "type": "toggle",
+                  "command": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+                  "update-command": "bash -c '$HOME/.config/swaync/scripts/update_mic.sh'"
+              },
+              {
+                  "label": "",
+                  "type": "toggle",
+                  "command": "bash -c $HOME/.config/swaync/scripts/inhibit.sh",
+                  "update-command": "bash -c '$HOME/.config/swaync/scripts/update_inhibit.sh'"
+              },
+              {
+                  "label": "󰄀",
+                  "command": "bash -c $HOME/.config/swaync/scripts/screenshot.sh ; swaync-client -cp"
+              },
+              {
+                  "label": "󰌾",
+                  "command": "bash -c $HOME/.config/swaync/scripts/lock.sh ; swaync-client -cp"
+              },
+              {
+                  "label": "󰓃",
+                  "command": "bash -c $HOME/.config/swaync/scripts/open_audio.sh"
+              }
+          ]
+      }
+  }
+}

@@ -1,0 +1,88 @@
+# ~ GENERAL ~
+general {
+    no_fade_in = false
+    grace = 0
+    disable_loading_bar = true
+    hide_cursor = true
+    ignore_empty_input = true
+    text_trim = true
+}
+
+# ~ BACKGROUND ~
+background {
+    monitor =
+    path = screenshot
+    blur_passes = 3
+    blur_size = 5
+    noise = 0.0117
+    contrast = 0.8916
+    brightness = 0.8172
+    vibrancy = 0.1696
+    vibrancy_darkness = 0.0
+}
+
+# ~ CLOCK (Huge & Bold) ~
+label {
+    monitor =
+    text = cmd[update:1000] echo "$(date +"%H:%M")"
+    color = rgba(255, 255, 255, 0.85)
+    # HUGE font size
+    font_size = 250
+    font_family = JetBrains Mono Nerd Font ExtraBold
+    
+    # Move UP from center
+    position = 0, 120
+    halign = center
+    valign = center
+}
+
+# ~ DATE (Just below clock) ~
+label {
+    monitor =
+    text = cmd[update:1000] echo "$(date +"%A, %B %d")"
+    color = rgba(255, 255, 255, 0.6)
+    font_size = 42
+    font_family = JetBrains Mono Nerd Font
+    
+    # Move UP from center (less than clock)
+    position = 0, 20
+    halign = center
+    valign = center
+}
+
+# ~ USER AVATAR ~
+image {
+    monitor =
+    path = ~/.config/hypr/face.jpeg
+    size = 250
+    border_color = rgba(255, 255, 255, 0.6)
+    border_size = 1
+    
+    # Move DOWN from center
+    position = 0, -60
+    halign = center
+    valign = center
+}
+
+# ~ PASSWORD INPUT ~
+input-field {
+    monitor =
+    size = 380, 70
+    outline_thickness = 0
+    dots_size = 0.2
+    dots_spacing = 0.2
+    dots_center = true
+    
+    # Glassy look
+    inner_color = rgba(255, 255, 255, 0.1)
+    font_color = rgb(200, 200, 200)
+    fade_on_empty = false
+    placeholder_text = 
+    hide_input = false
+    
+    # Move DOWN from center (below avatar)
+    position = 0, -140
+    halign = center
+    valign = center
+}
+

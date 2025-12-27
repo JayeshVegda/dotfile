@@ -1,0 +1,7 @@
+/**
+ * Fonts - Catppuccin Mocha
+ **/
+
+* {
+    font: "JetBrainsMono Nerd Font 12";
+}
