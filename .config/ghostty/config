@@ -49,3 +49,5 @@
 # resize-overlay-duration = 4s 200ms
 theme = Catppuccin Mocha
 mouse-scroll-multiplier = 0.5
+
+term = xterm-256color

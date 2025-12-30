@@ -1,347 +1,585 @@
-/* Catppuccin Mocha Palette with Transparency */
-@define-color base            rgba(30, 30, 46, 0.7);    /* Main background */
-@define-color mantle          rgba(24, 24, 37, 0.8);    /* Alt background */
-@define-color surface0        rgba(49, 50, 68, 0.5);    /* Hover/Selection */
-@define-color text            #cdd6f4;                  /* Main text */
-@define-color subtext0        #a6adc8;                  /* Alt text */
-@define-color mauve           #cba6f7;                  /* Accent */
-@define-color lavender        #b4befe;                  /* Accent Active */
-@define-color red             #f38ba8;                  /* Urgent */
-
-/* Mapping your old variables to Mocha */
-@define-color background      @base;
-@define-color background-alt  @mantle;
-@define-color text-alt        @subtext0;
-@define-color selected        @surface0;
-@define-color hover           alpha(@surface0, 0.6);
-@define-color urgent          @red;
-@define-color accent          @mauve;
-@define-color accent-active   @lavender;
-
-/* Force clear window background for transparency to work */
-window#swaync-control-center,
-window#swaync-notification-window {
-    background: transparent;
+@import "theme.css";
+notificationwindow, blankwindow, blankwindow {
+  background: transparent;
 }
 
-* {
-  color: @text;
-  all: unset;
-  font-size: 0.95rem;
-  font-family: "JetBrainsMono Nerd Font";
-  transition: 200ms;
-  font-weight: 700;
-}
-/* ... rest of your CSS remains the same ... */
-.notification {
-  padding: 0 5px;
-  border-radius: 15px;
-  border: 2px solid @background;
-  color: @text;
-}
-
-.notification-background {
-  background: @background;
+.close-button {
+  /* The notification Close Button */
+  background: var(--noti-close-bg);
+  color: var(--text-color);
+  text-shadow: none;
+  padding: 0;
+  border-radius: 100%;
+  margin-top: 8px;
+  margin-right: 8px;
   box-shadow: none;
-  border-radius: 15px;
-  margin: 8px;
+  border: none;
+  min-width: 24px;
+  min-height: 24px;
 }
 
-.notification-row .inline-reply-entry {
-  padding: 5px 10px;
-  background: @background-alt;
-  border-radius: 15px;
+.close-button:hover {
+  box-shadow: none;
+  background: var(--noti-close-bg-hover);
+  transition: var(--hover-tranistion);
+  border: none;
 }
 
-.notification-row .inline-reply-button {
-  padding: 5px 10px;
-  border-radius: 15px;
-  background: @hover;
+.notification-row {
+  background: none;
+  outline: none;
 }
 
-.notification-row .inline-reply .inline-reply-button:hover {
-  background: @selected;
+.notification-row:focus {
+  background: var(--noti-bg-focus);
 }
 
-.notification .notification-content {
-  margin: 10px;
+.notification-row .notification-background {
+  padding: 8px 12px;
 }
 
-.notification-content .text-box {
-  margin: 0 0 0 15px;
+.notification-row .notification-background .notification {
+  /* The actual notification */
+  /* border-radius: var(--border-radius);
+  border: var(--border); */
+  padding: 0;
+  transition: var(--hover-tranistion);
+  background: rgba(var(--noti-bg), var(--noti-bg-alpha));
 }
 
-.notification-content .time {
-  font-size: 0.95rem;
-  padding: 2px 0;
-  font-weight: 800;
+.notification-row .notification-background .notification.low {
+  /* Low Priority Notification */
 }
 
-.notification .summary {
-  font-weight: 800;
-  margin-bottom: 2px;
-  padding: 2px 0;
-  font-size: 1rem;
+.notification-row .notification-background .notification.normal {
+  /* Normal Priority Notification */
 }
 
-.notification .body {
-  color: @text-alt;
-  font-size: 0.8rem;
+.notification-row .notification-background .notification.critical {
+  /* Critical Priority Notification */
 }
 
-.notification.critical {
-  border-color: @urgent;
+.notification-row .notification-background .notification .notification-default-action {
+  /* The large action that also displays the notification summary and body */
+  padding: 8px;
+  margin: 0;
+  box-shadow: none;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  transition: var(--hover-tranistion);
+  border-radius: var(--border-radius);
 }
 
-.notification.low progress,
-.notification.normal progress,
-.notification.critical progress {
-  background: @selected;
+.notification-row .notification-background .notification .notification-default-action:hover {
+  -gtk-icon-filter: none;
+  background: var(--noti-bg-hover);
 }
 
-.notification-background .close-button {
+.notification-row .notification-background .notification .notification-default-action:not(:only-child) {
+  /* When alternative actions are visible */
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content {
+  background: transparent;
+  border-radius: var(--border-radius);
+  padding: 0;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .image {
+  /* Notification Primary Image */
+  -gtk-icon-filter: none;
+  -gtk-icon-size: var(--notification-icon-size);
+  border-radius: 100px;
+  /* Size in px */
+  margin: 4px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .app-icon {
+  /* Notification app icon (only visible when the primary image is set) */
+  -gtk-icon-filter: none;
+  -gtk-icon-size: var(--notification-app-icon-size);
+  -gtk-icon-shadow: 0 1px 4px black;
   margin: 6px;
-  padding: 2px;
-  border-radius: 6px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box label {
+  /* Fixes base GTK 4 CSS setting a filter of opacity 50% for some odd reason */
+  filter: none;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary {
+  /* Notification summary/title */
+  font-size: var(--font-size-summary);
+  font-weight: 600;
   background: transparent;
+  color: var(--text-color);
+  text-shadow: none;
+  margin-bottom: 4px;
 }
 
-.notification-background .close-button:hover {
-  background: @hover;
-}
-
-.notification > *:last-child > * {
-  min-height: 3.2em;
-}
-
-.notification > *:last-child > * .notification-action {
-  background: @hover;
-  margin: 0 6px 9px 6px;
-  border-radius: 8px;
-}
-
-.notification > *:last-child > * .notification-action:hover {
-  background: @selected;
-}
-
-.notification > *:last-child > * .notification-action:active {
-  background: @selected;
-}
-
-.control-center {
-  background: @background;
-  border-radius: 15px;
-  margin: 5px;
-  padding: 12px;
-}
-
-.control-center .notification-background {
-  background: @background-alt;
-  margin: 7px 0;
-}
-
-/* I dont want to see close buttons in notification center */
-.control-center .notification-background .close-button,
-.notification-group-close-button{
-  opacity: 0;
-}
-
-/* Notifications expanded-group */
-.notification-group {
-  margin: 0px 8px;
-}
-
-.notification-group-headers {
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
+  /* Notification time-ago */
+  font-size: var(--font-size-summary);
   font-weight: bold;
-  color: @text;
-}
-
-.notification-group-headers > label {
-  margin: 0 3px;
-  font-size: 1rem;
-}
-
-.notification-group-icon {
-  color: @text;
-}
-
-.notification-group-collapse-button,
-.notification-group-close-all-button {
   background: transparent;
-  color: @text;
-  margin: 4px; 
-  border-radius: 6px;
+  color: var(--text-color);
+  text-shadow: none;
+  margin-right: 30px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .body {
+  /* Notification body */
+  font-size: var(--font-size-body);
+  font-weight: normal;
+  background: transparent;
+  color: var(--text-color);
+  text-shadow: none;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content progressbar {
+  /* The optional notification progress bar */
+  margin-top: 4px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .body-image {
+  /* The "extra" optional bottom notification image */
+  margin-top: 4px;
+  background-color: white;
+  -gtk-icon-filter: none;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply {
+  /* The inline reply section */
+  margin-top: 4px;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-entry {
+  background: var(--noti-bg-darker);
+  color: var(--text-color);
+  caret-color: var(--text-color);
+  border: var(--border);
+  border-radius: var(--border-radius);
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button {
+  margin-left: 4px;
+  background: rgba(var(--noti-bg), var(--noti-bg-alpha));
+  border: var(--border);
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button:disabled {
+  background: initial;
+  color: var(--text-color-disabled);
+  border: var(--border);
+  border-color: transparent;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button:hover {
+  background: var(--noti-bg-hover);
+}
+
+.notification-row .notification-background .notification .notification-alt-actions {
+  background: none;
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
   padding: 4px;
 }
 
-/* Do not disturb */
-.widget-dnd {
-  padding: 8px 14px; 
-  border-radius: 12px;
-  margin: 5px 0;
-  color: @text;
-  background: @background-alt;
+.notification-row .notification-background .notification .notification-action {
+  /* The alternative actions below the default action */
+  margin: 4px;
+  padding: 0;
 }
 
-.widget-dnd > label {
-  font-size: 1rem;
+.notification-row .notification-background .notification .notification-action > button {
+  border-radius: var(--border-radius);
+  color: var(--text-color);
 }
 
-.widget-dnd switch {
-  background: @hover;
-  border-radius: 8px;
+.notification-group {
+  /* Styling only for Grouped Notifications */
+  transition: opacity 200ms ease-in-out;
+  /* The groups close button */
+}
+
+.notification-group:focus {
+  background: var(--noti-bg-focus);
+}
+
+.notification-group.low {
+  /* Low Priority Group */
+}
+
+.notification-group.normal {
+  /* Low Priority Group */
+}
+
+.notification-group.critical {
+  /* Low Priority Group */
+}
+
+.notification-group .notification-group-close-button .close-button {
+  margin: 12px 20px;
+}
+
+.notification-group .notification-group-buttons, .notification-group .notification-group-headers {
+  margin: 0 16px;
+  color: var(--text-color);
+}
+
+.notification-group .notification-group-headers {
+  /* Notification Group Headers */
+}
+
+.notification-group .notification-group-headers .notification-group-icon {
+  color: var(--text-color);
+  -gtk-icon-size: var(--notification-group-icon-size);
+}
+
+.notification-group .notification-group-headers .notification-group-header {
+  color: var(--text-color);
+}
+
+.notification-group .notification-group-buttons {
+  /* Notification Group Buttons */
+}
+
+.notification-group.collapsed {
+  /* When another group is expanded, lower the opacity of the collapsed ones */
+}
+
+.notification-group.collapsed.not-expanded {
+  opacity: 0.4;
+}
+
+.notification-group.collapsed .notification-row .notification {
+  background-color: rgba(var(--noti-bg), 1);
+}
+
+.notification-group.collapsed .notification-row:not(:last-child) {
+  /* Top notification in stack */
+  /* Set lower stacked notifications opacity to 0 */
+}
+
+.notification-group.collapsed .notification-row:not(:last-child) .notification-action,
+.notification-group.collapsed .notification-row:not(:last-child) .notification-default-action {
+  opacity: 0;
+}
+
+.notification-group.collapsed:hover .notification-row:not(:only-child) .notification {
+  background-color: var(--noti-bg-hover);
+}
+
+.control-center {
+  /* The Control Center which contains the old notifications + widgets */
+  background: var(--cc-bg);
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  border: var(--border);
+}
+
+.control-center .control-center-list-placeholder {
+  /* The placeholder when there are no notifications */
+  opacity: 0.5;
+}
+
+.control-center .control-center-list {
+  /* List of notifications */
+  background: transparent;
+}
+
+.control-center .control-center-list .notification {
+  box-shadow: var(--notification-shadow);
+}
+
+.control-center .control-center-list .notification .notification-default-action,
+.control-center .control-center-list .notification .notification-action {
+  transition: var(--group-collapse-tranistion), var(--hover-tranistion);
+}
+
+.control-center .control-center-list .notification .notification-default-action:hover,
+.control-center .control-center-list .notification .notification-action:hover {
+  background-color: var(--noti-bg-hover);
+}
+
+/* --- Remove grey slab/shadow around notifications inside Control Center --- */
+.control-center .control-center-list .notification-group,
+.control-center .control-center-list .notification-group .notification-row,
+.control-center .control-center-list .notification-group .notification-background {
+  background-color: transparent;
   box-shadow: none;
-  padding: 2px;
+  border: none;
 }
 
-.widget-dnd switch slider {
-  background: @text;
-  border-radius: 8px;
+.blank-window {
+  /* Window behind control center and on all other monitors */
+  background: transparent;
 }
 
-.widget-volume,
-.widget-backlight {
-  padding: 8px 14px;
-  margin: 5px 0;
-  border-radius: 12px;
-  color: @text;
-  font-weight: 800;
-  background: @background-alt;
+.floating-notifications {
+  background: transparent;
 }
 
-.widget-volume label,
-.widget-backlight label {
+.floating-notifications .notification {
+  box-shadow: none;
+}
+
+/*** Widgets ***/
+.widget {
+  margin: 8px;
+  padding: 8px;
+  border-radius: var(--border-radius);
+}
+
+/* Title widget */
+.widget-title > label {
+  margin-right: 8px;
+  font-size: 1.5rem;
+}
+
+.widget-title > button {
+  margin-left: 8px;
+  border-radius: var(--border-radius);
+}
+
+/* DND widget */
+.widget-dnd label {
+  color: var(--text-color);
+  margin-right: 8px;
   font-size: 1.1rem;
 }
 
-.widget-volume slider,
-.widget-backlight slider {
-  border-radius: 24px;
-  margin: -8px;
-  background: @text;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.15), 0 4px 4px rgba(0, 0, 0, 0.4);
-  opacity: 1;
-}
-
-.widget-volume trough,
-.widget-backlight trough {
-  background: @hover;
+.widget-dnd switch {
+  border-radius: var(--border-radius);
   margin-left: 8px;
-  border-radius: 12px;  
 }
 
-.widget-volume highlight,
-.widget-backlight highlight {
-  padding: 3.5px;
-  border-radius: 12px;  
-  background: @text;  
+.widget-dnd switch slider {
+  border-radius: var(--border-radius);
 }
 
-.widget-dnd switch:hover,
-.widget-buttons-grid button:hover,
-.control-center .notification-group-collapse-button:hover,
-.control-center .notification-group-close-all-button:hover
-{
-  background: @hover;
+/* Label widget */
+.widget-label > label {
+  font-size: 1.1rem;
+}
+
+/* Mpris widget */
+:root {
+  --mpris-album-art-overlay: rgba(0, 0, 0, 0.55);
+  --mpris-button-hover: rgba(0, 0, 0, 0.5);
+  --mpris-album-art-icon-size: 96px;
+  --mpris-album-art-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
 }
 
 .widget-mpris {
-  background: @background-alt;
-  border-radius: 15px;
-  margin: 5px 0;
-  padding: 0 10px; 
+  padding: 0;
+  /* The parent to all players */
 }
 
-.mpris-overlay {
-  background: @background-alt;
+.widget-mpris .widget-mpris-player {
+  margin: 16px 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--mpris-album-art-shadow);
 }
 
-.widget-mpris-player {
-  background: @background-alt;
-  color: @text;
-  margin: 0 5px;
-  padding: 10px 0 15px; 
+.widget-mpris .widget-mpris-player .mpris-background {
+  filter: blur(10px);
 }
 
-/* Control buttons for mpris widget */
-.widget-mpris-player .image-button:hover {
-  border-radius: 8px;
-  background: @hover;
+.widget-mpris .widget-mpris-player .mpris-overlay {
+  padding: 16px;
+  background-color: var(--mpris-album-art-overlay);
 }
 
-.widget-mpris-player button {
-  padding: 5px;
-  margin: 0 2.5px;
+.widget-mpris .widget-mpris-player .mpris-overlay button:hover {
+  /* The media player buttons (play, pause, next, etc...) */
+  background: var(--noti-bg-hover);
 }
 
-.widget-mpris-player .mpris-overlay > box:last-child {
-  border-radius: 16px;
-  padding: 0 5px;
-  background: alpha(@hover, .3);
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
+  border-radius: var(--border-radius);
+  box-shadow: var(--mpris-album-art-shadow);
+  min-width: var(--mpris-album-art-icon-size);
+  min-height: var(--mpris-album-art-icon-size);
+  width: var(--mpris-album-art-icon-size);
+  height: var(--mpris-album-art-icon-size);
 }
 
-.widget-mpris-album-art {
-  border-radius: 16px;
-  margin: 6px 4px;
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art image {
+  border-radius: var(--border-radius);
+  -gtk-icon-size: var(--mpris-album-art-icon-size);
 }
 
-.widget-mpris-title,
-.widget-mpris-subtitle {
-  font-weight: 700;
-  margin: 0 3px;
-} 
-
-.widget-mpris-title {
-  font-size: 1.2rem;
-}
- 
-.widget-mpris-subtitle {
-  font-size: 0.9rem;
-  color: @text-alt;
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-title {
+  font-weight: bold;
+  font-size: 1.25rem;
 }
 
-.widget-buttons-grid {
-  border-radius: 12px;
-  padding: 6px 15px;
-  background: @background-alt;
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-subtitle {
+  font-size: 1.1rem;
 }
 
-.widget-buttons-grid button {
-  padding: 10px 10px; 
-  margin: 3px;
-  background: @hover;
-  border-radius: 15px;
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button {
+  /* Change player control buttons */
 }
 
-.widget-buttons-grid button > label {
-  font-size: 16px;
-  color: @text;
+.widget-mpris .widget-mpris-player .mpris-overlay > box > button:hover {
+  background-color: var(--mpris-button-hover);
 }
 
-.widget-buttons-grid button:hover {
-  background: @selected;
+.widget-mpris > box > button {
+  /* Change player side buttons */
 }
 
-.widget-buttons-grid button:checked {
-  background-color: @accent;
-  box-shadow: 0 0 8px alpha(@accent, 0.4);
+.widget-mpris > box > button:disabled {
+  /* Change player side buttons insensitive */
 }
 
-.widget-buttons-grid button:checked > label {
-  color: @background;
+/* Buttons widget */
+.widget-buttons-grid flowboxchild > button {
+  border-radius: var(--border-radius);
 }
 
-.widget-buttons-grid button:checked:hover {
-  background-color: @accent-active;
-  box-shadow: 0 0 12px alpha(@accent-active, 0.5);
+.widget-buttons-grid flowboxchild > button.toggle:checked {
+  /* style given to the active toggle button */
 }
 
-/* Change color for plaseholder when no notifications */
-.control-center-list-placeholder {
-  color: @text;
+/* Menubar widget */
+.widget-menubar {
+  /* The revealer buttons */
+  /* .AnyName { Name defined in config after #
+    background-color: rgba(var(--noti-bg), 1.0);
+    padding: 8px;
+    margin: 8px;
+    border-radius: 12px;
+  }
+
+  .AnyName>button {
+    background: transparent;
+    border: none;
+  }
+
+  .AnyName>button:hover {
+    background-color: var(--noti-bg-hover);
+  } */
 }
 
-/* Avoid 'annoying' backgroud */
-.blank-window {  
-  background: transparent;  
+.widget-menubar > .menu-button-bar {
+  /* The left button container */
+  /* The right button container */
+  /* The left and right button container */
+}
+
+.widget-menubar > .menu-button-bar > .start {
+  margin-left: 8px;
+}
+
+.widget-menubar > .menu-button-bar > .end {
+  margin-right: 8px;
+}
+
+.widget-menubar > .menu-button-bar > .widget-menubar-container button {
+  border-radius: var(--border-radius);
+  margin: 0 4px;
+}
+
+.widget-menubar > revealer * {
+  margin-top: 8px;
+}
+
+.widget-menubar > revealer * button {
+  border-radius: var(--border-radius);
+  margin: 8px;
+  margin-top: 0;
+}
+
+.widget-menubar > revealer * button:last-child {
+  margin-bottom: 0;
+}
+
+/* Volume widget */
+:root {
+  --widget-volume-row-icon-size: 24px;
+}
+
+/* Each row app icon */
+.widget-volume row image {
+  -gtk-icon-size: var(--widget-volume-row-icon-size);
+}
+
+.per-app-volume {
+  background-color: var(--noti-bg-alt);
+  margin: 8px;
+  margin-bottom: 0;
+  border-radius: var(--border-radius);
+}
+
+/* Slider widget */
+.widget-slider label {
+  font-size: inherit;
+}
+
+/* Backlight widget */
+/* Inhibitors widget */
+.widget-inhibitors > label {
+  margin-right: 8px;
+  font-size: 1.5rem;
+}
+
+.widget-inhibitors > button {
+  margin-left: 8px;
+  border-radius: var(--border-radius);
+}
+
+/* === Bigger Nerd Font Icons for Volume & Brightness Labels === */
+
+.widget-volume label:first-child,
+.widget-backlight label:first-child {
+  font-size: 1.5rem;     /* increase or tweak: try 2rem if you want even bigger */
+  line-height: 1.2;
+  margin-right: 10px;
+  color: var(--text-color); /* keeps same color as text */
+}
+
+/* Make sure it aligns nicely with the slider */
+.widget-volume,
+.widget-backlight {
+  padding: 10px 14px;
+}
+
+/* --- Balance button-grid alignment & spacing --- */
+.widget-buttons-grid flowboxchild > button {
+  border-radius: 25px;
+  transition: background 0.2s ease;
+}
+
+.widget-buttons-grid flowboxchild > button.toggle:checked {
+  background: rgba(72, 141, 245, 0.6);
+  /* box-shadow: 0 0 6px rgba(247, 27, 229, 0.5); */
+  border: 2px solid rgba(81, 150, 253, 0.50);
+}
+
+.widget-buttons-grid flowboxchild > button label {
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.80)
+}
+
+/* --- FIX: Targeted Padding for Wi-Fi and Hyprsunset Icons --- */
+.widget-buttons-grid flowboxchild:nth-child(1) > button label,
+.widget-buttons-grid flowboxchild:nth-child(3) > button label {
+    /* Apply the padding-right to both selected icons */
+    padding-right: 8px;
+}
+
+/* 2. Targets the Hypridle Button (4th child in the grid) */
+.widget-buttons-grid flowboxchild:nth-child(4) > button label {
+    /* Pushes the icon 3 pixels to the left. Adjust '2px' as needed. */
+    padding-right: 3px;
 }

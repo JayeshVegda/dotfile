@@ -2,6 +2,10 @@
 #set -g fish_greeting "" # Disable the default greeting
 set -gx LANG en_US.UTF-8
 
+# Only set TERM if it's not already set
+if not set -q TERM
+    set -gx TERM xterm-256color
+end
 function fish_greeting
     fastfetch
 end
@@ -23,20 +27,21 @@ if status is-interactive
     # Expands when you type. e.g. 'cfg' -> space -> expands to full path
     abbr --add cfg "nvim ~/.config/hypr/hyprland.conf"
     abbr --add lzd lazydocker
-
+    alias unlock="sudo rm /var/lib/pacman/db.lck"
+    alias lt="eza --tree --level=2 --icons"
     # --- ALIASES ---
     # Visuals
     alias ls="eza --icons --group-directories-first"
     alias ll="eza -l --icons --group-directories-first --git"
     alias cat="bat"
-
+    alias yays="yay -S --noconfirm --answerdiff None --answerclean None"
     # Hyprland & Wayland specific
     alias cursor="cursor --ozone-platform-hint=wayland"
-
+    alias homeserver="ssh homeserver@192.168.1.71"
     # --- VI MODE & KEYBINDINGS ---
     set -g fish_key_bindings fish_vi_key_bindings
 end
-
+export PATH="$HOME/.local/bin:$PATH"
 # Remove stty commands unless strictly necessary (can slow down startup)
 # stty -ixon
 # stty sane

@@ -18,5 +18,67 @@ use = "yazi-rs/plugins:smart-filter"
 rev = "7ca66b4"
 hash = "bcda8eeb3f4013bae156aecabfc745e8"
 
-[flavor]
-deps = []
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+rev = "4f0d6b0"
+hash = "6fc881f53dd748b559f73fcaf38ab99e"
+
+[[plugin.deps]]
+use = "lpnh/fr"
+rev = "a60466e"
+hash = "ae6f2fb9ea03527e3a367a9faf2690ac"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "1612f00"
+hash = "5b2eb0cc2050cec1e4de83cfa51a5b90"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:jump-to-char"
+rev = "1612f00"
+hash = "ce67445ebb1bf3d97b8e44f50904b2c5"
+
+[[plugin.deps]]
+use = "imsi32/yatline"
+rev = "88bd1c5"
+hash = "981acbe9b758b1af3a8154c932bb936d"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:toggle-pane"
+rev = "1612f00"
+hash = "8a7c58225816a163a6e8730c0adafbc8"
+
+[[plugin.deps]]
+use = "Mr-Ples/command-palette"
+rev = "e5e6105"
+hash = "fee4f11556df389bd37341584c0fbcaf"
+
+[[plugin.deps]]
+use = "uhs-robert/recycle-bin"
+rev = "53ad17c"
+hash = "80221fe740a6f251d35845d29391bea7"
+
+[[plugin.deps]]
+use = "pirafrank/what-size"
+rev = "d896656"
+hash = "62251f94eb67648d42cdfcfb8be0fad2"
+
+[[plugin.deps]]
+use = "ourongxing/fast-enter"
+rev = "738356f"
+hash = "b209b5db91df69bdc6a4656cb8276cd9"
+
+[[plugin.deps]]
+use = "Rolv-Apneseth/bypass"
+rev = "c1e5fcf"
+hash = "208e77480824f62558a5b037c8569d61"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "9276ffa"
+hash = "8d7799e4598ff079fa5ee5c770d9bc08"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-latte"
+rev = "9276ffa"
+hash = "b7f67b15a9f94f408d94b9630465c37a"

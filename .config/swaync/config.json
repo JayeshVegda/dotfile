@@ -1,112 +1,127 @@
 {
-  "$schema": "/etc/xdg/swaync/configschema.json",
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "ignore-gtk-theme": true,
   "positionX": "right",
   "positionY": "top",
+  "layer": "overlay",
+  "layer-shell": true,
   "cssPriority": "user",
-  "control-center-width": 450,
+  "control-center-layer": "top",
+  "control-center-exclusive-zone": true,
+  "control-center-margin-top": 10,
+  "control-center-margin-bottom": 10,
+  "control-center-margin-right": 0,
+  "control-center-margin-left": 0,
+  "control-center-width": 500,
+  "control-center-height": 600,
+  "control-center-preferred-output": "",
+  "notification-2fa-action": true,
+  "notification-inline-replies": false,
+  "notification-body-image-height": 180,
+  "notification-body-image-width": 280,
+  "notification-window-width": 480,
+  "notification-window-height": -1,
+  "notification-window-preferred-output": "",
+  "timeout": 10,
+  "timeout-low": 5,
+  "timeout-critical": 5,
   "fit-to-screen": true,
-
-  "notification-window-width": 400,
-  "notification-icon-size": 40,
-  "notification-body-image-height": 500,
-  "notification-body-image-width": 500,
-  "notification-inline-replies": true,
-  "notification-2fa-action": false,
-
-  "timeout": 4,
-  "timeout-low": 4,
-  "timeout-critical": 6,
-  
+  "relative-timestamps": true,
   "keyboard-shortcuts": true,
+  "notification-grouping": true,
   "image-visibility": "when-available",
   "transition-time": 200,
   "hide-on-clear": false,
-  "hide-on-action": false,
+  "hide-on-action": true,
+  "text-empty": "No Notifications",
   "script-fail-notify": true,
-
+  "scripts": {
+    "play-notification-sound": {
+      "exec": "paplay /home/arch/.config/swaync/notify.mp3",
+      "run-on": "receive"
+    }
+  },
+  "notification-visibility": {
+    "mute-spotify": {
+      "state": "muted",
+      "urgency": "Low",
+      "app-name": "Spotify"
+    }
+  },
   "widgets": [
+    "title",
+    "buttons-grid",
     "mpris",
-    "dnd",
     "backlight",
     "volume",
-    "notifications",
-    "buttons-grid"
+    "inhibitors",
+    "notifications"
   ],
- 
   "widget-config": {
-      "backlight": {
-          "device": "amdgpu_bl2",
-          "label": "󰃠",
-          "slider": true,
-          "min": 10
-      },
-      "volume": {
-          "device": "default",
-          "label": "",
-          "slider": true
-      },
-
-      "dnd": {
-          "text": "Do not disturb"
-      },
-
-      "mpris": {
-          "image-size": 110,
-          "image-radius": 12,
-          "autohide": false,
-          "blacklist": [ "org.mpris.MediaPlayer2.playerctld"]
-      },
-
-      "notifications": {
-          "clear-all-button": true,
-          "clear-on-action": true,
-          "default-timeout": 4000,
-          "group-by-app": true,
-          "ignore-transient": false,
-          "position": "top-right"
-      },
-
-      "buttons-grid": {
-          "actions": [
-              {
-                  "label": "󰤨",
-                  "type": "toggle",
-                  "command": "bash -c $HOME/.config/swaync/scripts/toggle_wifi.sh",
-                  "update-command": "bash -c '$HOME/.config/swaync/scripts/update_wifi.sh'",
-                  "on-click-right": "bash -c $HOME/.config/swaync/scripts/open_network.sh"
-              },
-              {
-                  "label": "󰂯",
-                  "type": "toggle",
-                  "command": "bash -c $HOME/.config/swaync/scripts/toggle_bluetooth.sh",
-                  "update-command": "bash -c '$HOME/.config/swaync/scripts/update_bluetooth.sh'",
-                  "on-click-right": "bash -c $HOME/.config/swaync/scripts/open_bluetooth.sh"
-              },
-              {
-                  "label": "",
-                  "type": "toggle",
-                  "command": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
-                  "update-command": "bash -c '$HOME/.config/swaync/scripts/update_mic.sh'"
-              },
-              {
-                  "label": "",
-                  "type": "toggle",
-                  "command": "bash -c $HOME/.config/swaync/scripts/inhibit.sh",
-                  "update-command": "bash -c '$HOME/.config/swaync/scripts/update_inhibit.sh'"
-              },
-              {
-                  "label": "󰄀",
-                  "command": "bash -c $HOME/.config/swaync/scripts/screenshot.sh ; swaync-client -cp"
-              },
-              {
-                  "label": "󰌾",
-                  "command": "bash -c $HOME/.config/swaync/scripts/lock.sh ; swaync-client -cp"
-              },
-              {
-                  "label": "󰓃",
-                  "command": "bash -c $HOME/.config/swaync/scripts/open_audio.sh"
-              }
-          ]
-      }
+    "notifications": {
+      "vexpand": true
+    },
+    "title": {
+      "text": "Notifications",
+      "clear-all-button": true,
+      "button-text": "Clear All"
+    },
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+    "inhibitors": {
+      "text": "Inhibitors",
+      "clear-all-button": true,
+      "button-text": "Clear All"
+    },
+    "backlight": {
+      "label": "󰃠",
+      "device": "amdgpu_bl2",
+      "subsystem": "backlight",
+      "min": 0
+    },
+    "volume": {
+      "label": "󰕾",
+      "show-per-app": true,
+      "show-per-app-icon": true
+    },
+    
+    "mpris": {
+      "blacklist": [],
+      "autohide": true,
+      "show-album-art": "always",
+      "loop-carousel": false
+    },
+    "buttons-grid": {
+      "buttons-per-row": 4,
+      "actions": [
+        {
+          "label": "󰤥",
+          "type": "toggle",
+          "active": true,
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
+          "update-command": "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'"
+        },
+        {
+          "label": "󰂯",
+          "type": "toggle",
+          "active": true,
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && bluetoothctl power on || bluetoothctl power off'",
+          "update-command": "bluetoothctl show | grep -q 'Powered: yes' && echo true || echo false"
+        },
+        {
+          "label": "󰂚",
+          "type": "toggle",
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && swaync-client -dn || swaync-client -df'",
+          "update-command": "swaync-client -D"
+        },
+        {
+          "label": "",
+          "type": "toggle",
+          "command": "if [ \"$SWAYNC_TOGGLE_STATE\" = \"true\" ]; then hyprctl dispatch exec hypridle; else pkill -TERM hypridle; fi",
+          "update-command": "pgrep -x hypridle >/dev/null && echo true || echo false"
+        }
+      ]
+    }
   }
 }
