@@ -31,6 +31,7 @@ if status is-interactive
     alias lt="eza --tree --level=2 --icons"
     # --- ALIASES ---
     # Visuals
+    alias audit="sudo ~/.local/bin/system-audit.sh"
     alias ls="eza --icons --group-directories-first"
     alias ll="eza -l --icons --group-directories-first --git"
     alias cat="bat"
@@ -45,3 +46,4 @@ export PATH="$HOME/.local/bin:$PATH"
 # Remove stty commands unless strictly necessary (can slow down startup)
 # stty -ixon
 # stty sane
+alias reboot-windows="sudo grub-reboot \"Windows Boot Manager (on /dev/nvme0n1p1)\"; sudo reboot"

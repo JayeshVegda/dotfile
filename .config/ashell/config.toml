@@ -7,7 +7,7 @@ app_launcher_cmd = "vincienae"
 [modules]
 left = [ [ "appLauncher",  "Tray" ] ]
 center = [ "Clock" , "Workspaces" ]
-right = [ ["MediaPlayer", "Privacy", "Settings" ] , ["Updates" , "Notifications"] ]
+right = [ ["MediaPlayer", "Privacy", "Settings" ] , ["Updates" ,"taskwarrior",  "Notifications"] ]
 
 [updates]
 check_cmd = "checkupdates; paru -Qua"
@@ -39,6 +39,12 @@ format = "%r"
 [system_info]
 indicators = [ "Memory", "Temperature" ]
 
+[media_player]
+max_title_length = 100
+# Note: Empty players (like KDE Connect without metadata) may appear.
+# This is a known limitation - ashell shows all MPRIS players even without metadata.
+# To work around this, you can disable KDE Connect's media player feature in KDE Connect settings.
+
 [settings]
 lock_cmd = "playerctl --all-players pause; nixGL hyprlock &"
 audio_sinks_more_cmd = "pavucontrol -t 3"
@@ -50,8 +56,21 @@ bluetooth_more_cmd = "blueman-manager"
 [[settings.CustomButton]]
 name = "File Manager"
 icon = "A"
-command = "yazi"
+command = "ghostty -e yazi"
 tooltip = "Open File Manager"
+
+[[CustomModule]]
+name = "taskwarrior"
+icon = ""
+
+command = "ghostty -e bash ~/.config/ashell/taskwarrior_tui.sh"
+listen_cmd = "~/.config/ashell/task_status.sh"
+# Change icon based on task status
+icons.'empty' = "" 
+icons.'has_task' = ""
+# Show alert indicator when there are active tasks
+alert = "has_task"
+
 
 [appearance]
 style = "Islands"
