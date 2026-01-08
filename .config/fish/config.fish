@@ -43,6 +43,7 @@ if status is-interactive
     set -g fish_key_bindings fish_vi_key_bindings
 end
 export PATH="$HOME/.local/bin:$PATH"
+set -gx PATH $HOME/.config/tvcontrol $PATH
 # Remove stty commands unless strictly necessary (can slow down startup)
 # stty -ixon
 # stty sane
